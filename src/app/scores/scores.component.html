@@ -1,0 +1,27 @@
+<router-outlet></router-outlet>
+<div #div1 class="score">
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(1)">1</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(2)">2</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(3)">3</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(4)">4</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(5)">5</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(6)">6</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(7)">7</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(8)">8</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(9)">9</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(10)">10</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(11)">11</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(12)">12</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(13)">13</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(14)">14</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(15)">15</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(16)">16</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(17)">17</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(18)">18</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(19)">19</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(20)">20</button>
+    <button class="scoreButton" [disabled]="!started || triple" (click)="addScore(25)">25</button>
+    <button class="scoreButton" [disabled]="!started" (click)="addScore(0)">0</button>
+    <button [ngClass]="doubleButtonClass()" [disabled]="!started" (click)="setDouble()">Double</button>
+    <button [ngClass]="tripleButtonClass()" [disabled]="!started" (click)="setTriple()">Triple</button>
+</div>

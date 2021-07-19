@@ -1,0 +1,28 @@
+.score{
+    color: #cfa071;
+    margin-left: 2vw;
+}
+
+.scoreButton{
+    font-weight: 400;
+    font-size: 2vw;
+    width: 20%;
+    min-height: 10vh;
+    border-radius: 10px;
+    margin: 5px;
+    color: white;
+    box-shadow: 3px 10px 20px #000;
+    background: linear-gradient(1turn,#0f0d0f,#2d2a2d 95%,#605860);
+}
+
+.pressedButton{
+    font-weight: 400;
+    font-size: 2vw;
+    width: 20%;
+    min-height: 10vh;
+    border-radius: 10px;
+    margin: 5px;
+    color: white;
+    box-shadow: 3px 10px 20px #000;
+    background: linear-gradient(1turn,#808080,#2d2a2d 95%,#605860);
+}

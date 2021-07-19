@@ -1,0 +1,61 @@
+<router-outlet></router-outlet>
+<div #div2 class="darters">
+    <br>
+    <div *ngFor="let player of players" [ngClass]="getScoreTableClass(player)">
+        <table class="customTable">
+          <tr style="height: 50%;">
+            <td style="width: 35%;word-break: break-word;">{{player.name}}</td>
+            <td style="width: 5%;"></td>
+            <td style="width: 37%;">Round {{player.round}}</td>
+            <td style="width: 21%">{{player.remaining}}</td>
+          </tr>
+        </table>
+        <table class="customTable" *ngIf="player.winnerPlace == 0">
+          <tr style="height: 50%;">
+            <td style="border-right: solid; width: 35%;">Ø {{player.average}}</td>
+            <td style="border-right: solid; width: 21%;">{{player.score1}}</td>
+            <td style="border-right: solid; width: 21%;">{{player.score2}}</td>
+            <td style="width: 21%;">{{player.score3}}</td>
+          </tr>
+        </table>
+        <table class="customTable" *ngIf="player.winnerPlace > 0">
+            <tr style="height: 50%;">
+              <td style="width: 35%;">{{player.winnerPlace}}. Winner</td>
+              <td style="width: 21%;"></td>
+              <td style="width: 21%;"></td>
+              <td style="width: 21%;"></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <button *ngIf="isEditEnable && showOnStart" (click)="onAdd()" mat-icon-button color="warn" class="inputPlayer" >
+        <mat-icon>add</mat-icon>
+    </button>
+    <input #myInput class="inputPlayerText" *ngIf="!isEditEnable" onClick="this.setSelectionRange(0, this.value.length)" (keydown)="onKeydown($event)" [(ngModel)]="playerName"
+    [cdkTrapFocusAutoCapture]="show" [cdkTrapFocus]="show" autofocus>
+    <button *ngIf="!isEditEnable" (click)="addPlayer(playerName)" mat-icon-button color="warn" class="confirmButton" >
+        <mat-icon>check</mat-icon>
+    </button>
+
+
+    
+</div>
+
+<div class="box" *ngIf="hasPlayerAScore()">
+    <button (click)="deleteLastScore()" class="startButton" >
+      BACK
+    </button>
+</div>
+
+<div class="box" *ngIf="showOnStart && players.length > 0">
+    <button (click)="startGame()" class="startButton" >
+      START
+    </button>
+</div>
+
+<div class="box" *ngIf="isThereAWinner()">
+    <button (click)="resetGame()" class="startButton" >
+      RESET
+    </button>
+</div>
