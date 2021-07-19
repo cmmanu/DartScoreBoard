@@ -10,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { A11yModule } from '@angular/cdk/a11y'
 import { InjectService } from './inject.service';
+import { MatKeyboardModule } from 'angular-onscreen-material-keyboard';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { InjectService } from './inject.service';
     SplitterModule, 
     MatIconModule,
     A11yModule,
-    FormsModule, BrowserAnimationsModule
+    FormsModule, 
+    BrowserAnimationsModule,
+    MatKeyboardModule,
   ],
   providers: [InjectService],
   bootstrap: [AppComponent]

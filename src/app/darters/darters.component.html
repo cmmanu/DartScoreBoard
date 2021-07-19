@@ -33,7 +33,7 @@
         <mat-icon>add</mat-icon>
     </button>
     <input #myInput class="inputPlayerText" *ngIf="!isEditEnable" onClick="this.setSelectionRange(0, this.value.length)" (keydown)="onKeydown($event)" [(ngModel)]="playerName"
-    [cdkTrapFocusAutoCapture]="show" [cdkTrapFocus]="show" autofocus>
+    [cdkTrapFocusAutoCapture]="show" [cdkTrapFocus]="show" autofocus onfocus="" [matKeyboard]="'de-De'" (enterClick)="submitForm()">
     <button *ngIf="!isEditEnable" (click)="addPlayer(playerName)" mat-icon-button color="warn" class="confirmButton" >
         <mat-icon>check</mat-icon>
     </button>

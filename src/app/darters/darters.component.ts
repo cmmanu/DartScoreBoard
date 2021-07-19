@@ -59,6 +59,11 @@ export class DartersComponent implements OnInit {
       this.addPlayer(event.target.value);
     }
   }
+
+  public submitForm(){
+    this.addPlayer(this.playerName);
+  }
+
   public getPlayers(){
     return this.players;
   }
