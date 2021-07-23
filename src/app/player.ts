@@ -11,4 +11,5 @@ export class Player {
     throwsCount: number = 1;
     thrownPoints: number = 0;
     winnerPlace: number = 0;
+    resettedThrowsCount: boolean = false;
   }

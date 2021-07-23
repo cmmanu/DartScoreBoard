@@ -81,10 +81,12 @@ export class ScoresComponent implements OnInit {
           case 1:
             player.score1 = score.toString();
             player.currentScoreNumber = 2;
+            player.thrownPoints += Number(player.score1);
             break;
           case 2:
             player.score2 = score.toString();
             player.currentScoreNumber = 3;
+            player.thrownPoints += Number(player.score2);
             break;
           case 3:
             player.score3 = score.toString();
@@ -92,9 +94,10 @@ export class ScoresComponent implements OnInit {
             player.round++;
             
             //calculate average
-            player.thrownPoints += Number(player.score1) + Number(player.score2) + Number(player.score3);
-            player.average = Number((Math.round((player.thrownPoints / player.throwsCount) * 100) / 100).toFixed(2));
+            player.thrownPoints += Number(player.score3);
+            
             player.throwsCount++;
+            player.average = Number((Math.round((player.thrownPoints / (player.throwsCount-1)) * 100) / 100).toFixed(2));
             break;
         }
         //calculaste the remaining points of the player

@@ -11,8 +11,8 @@ export class AppComponent {
 
 
   public paneSettings: PanePropertiesModel[] = [
-    {collapsible: false , size : '75%'},
-     {collapsible : true ,  size : '25%'}
+    {collapsible: false , size : '63%'},
+     {collapsible : true ,  size : '37%'}
      ];
 
 

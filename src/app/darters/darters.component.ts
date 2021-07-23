@@ -151,7 +151,6 @@ export class DartersComponent implements OnInit {
   public deleteLastScore()
   {
     let minRound = 99999;
-    let searchIndex = 1;
     let helperPlayer: Player = new Player;
     for(let playerObj of this.players)
     {
@@ -159,7 +158,7 @@ export class DartersComponent implements OnInit {
       {
         continue;
       }
-      if(playerObj.round < minRound && playerObj.score1 != "")
+      if(playerObj.round <= minRound && playerObj.score1 != "")
       {
         minRound = playerObj.round;
         helperPlayer = playerObj;
@@ -171,7 +170,7 @@ export class DartersComponent implements OnInit {
     }
     else
     {
-      helperPlayer.round = helperPlayer.round != 0 ? helperPlayer.round - 1 : 0;
+      
       this.injectService.setHelperIndex(helperPlayer.index);
     }
 
@@ -188,38 +187,50 @@ export class DartersComponent implements OnInit {
         highestPlayerNumber = playerObj.index;
       }
     }
-
+    
    
     // reset the last score
     if(helperPlayer.score3 != "")
     {
+      helperPlayer.round = helperPlayer.round != 0 ? helperPlayer.round - 1 : 0;
       helperPlayer.remaining = helperPlayer.remaining + Number(helperPlayer.score3);
       helperPlayer.thrownPoints -= Number(helperPlayer.score3);
-      helperPlayer.currentScoreNumber = 2;
+      helperPlayer.currentScoreNumber = 3;
       helperPlayer.score3 = "";
+      helperPlayer.throwsCount = helperPlayer.throwsCount == 1 ? 1 : helperPlayer.throwsCount -1;
     }
     else if (helperPlayer.score2 != "")
     {
       helperPlayer.remaining = helperPlayer.remaining + Number(helperPlayer.score2);
       helperPlayer.thrownPoints -= Number(helperPlayer.score2);
-      helperPlayer.currentScoreNumber = 1;
+      helperPlayer.currentScoreNumber = 2;
       helperPlayer.score2 = "";
     }
     else if (helperPlayer.score1 != "")
     {
       helperPlayer.remaining = helperPlayer.remaining + Number(helperPlayer.score1);
       helperPlayer.thrownPoints -= Number(helperPlayer.score1);
+      helperPlayer.currentScoreNumber = 1;
       helperPlayer.score1 = "";
-      if(helperPlayer.round != 0)
+     // if(helperPlayer.round != 0)
+      //{
+      //  helperPlayer.index = highestPlayerNumber;
+      //}
+      
+      //calculate average
+      if(helperPlayer.average != 0 && helperPlayer.thrownPoints != 0 && helperPlayer.thrownPoints != 1)
       {
-        helperPlayer.index = highestPlayerNumber;
+        helperPlayer.average = Number((Math.round((helperPlayer.thrownPoints / (helperPlayer.throwsCount - 1)) * 100) / 100).toFixed(2));
+      }
+      else
+      {
+        helperPlayer.average = 0;
       }
     }
 
-    //calculate average
-    helperPlayer.throwsCount = helperPlayer.throwsCount - 1;
-    helperPlayer.average = Number((Math.round((helperPlayer.thrownPoints / helperPlayer.throwsCount) * 100) / 100).toFixed(2));
-    helperPlayer.throwsCount++;
+    // set the thrownPoints to zero if it is a negative value (negative values are not suitable)
+    helperPlayer.thrownPoints = helperPlayer.thrownPoints < 0 ? 0 : helperPlayer.thrownPoints;
+    
 
     // save modified player in List
     for(let playerObj of this.players)
