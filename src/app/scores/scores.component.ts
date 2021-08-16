@@ -1,4 +1,5 @@
 import { computeMsgId } from '@angular/compiler';
+import { trimTrailingNulls } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { InjectService } from '../inject.service';
 import { Player } from '../player';
@@ -17,6 +18,9 @@ export class ScoresComponent implements OnInit {
   double: boolean = false;
   triple: boolean = false;
   winnerNumber: number = 1;
+  audio = new Audio();
+  audio2 = new Audio();
+  resetNextPlayer: Boolean = false;
 
   constructor(private injectService: InjectService) { 
     this.injectService.started.subscribe( value => {
@@ -33,9 +37,15 @@ export class ScoresComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.audio.src = "./assets/sounds/button_press.mp3";
+    this.audio.load();
+    this.audio2.src = "./assets/sounds/180.mp3";
+    this.audio2.load();
+  
   }
 
   addScore(score: number){
+    this.audio.play();
     let helperRound = 99999;
     
     let testPlayers : Player[] = [];
@@ -92,6 +102,13 @@ export class ScoresComponent implements OnInit {
             player.score3 = score.toString();
             player.currentScoreNumber = 1;
             player.round++;
+
+            // indicates that the next players score can be resetted
+            this.resetNextPlayer = true;
+            
+            if((Number(player.score1) + Number(player.score2) + Number(player.score3)) == 180){
+              this.audio2.play();
+            }
             
             //calculate average
             player.thrownPoints += Number(player.score3);
@@ -108,6 +125,8 @@ export class ScoresComponent implements OnInit {
         {
           player.winnerPlace = this.winnerNumber;
           this.winnerNumber++;
+          // indicates that the next players score can be resetted
+          this.resetNextPlayer = true;
           if(player.round == helperRound)
           {
             player.round++;
@@ -119,6 +138,8 @@ export class ScoresComponent implements OnInit {
         {
           player.remaining = player.remaining + Number(player.score1) + Number(player.score2) + Number(player.score3);
           player.currentScoreNumber = 1;
+          // indicates that the next players score can be resetted
+          this.resetNextPlayer = true;
           if(player.round == helperRound)
           {
             player.round++;
@@ -133,19 +154,38 @@ export class ScoresComponent implements OnInit {
       }
     }
 
+    
     //reset everything when the round is over
     if(this.helperIndex > testPlayers.length)
     {
       this.helperIndex = 1;
-      // reset all scores
-      for(var player of testPlayers){
+    }
+
+    this.helperIndex = this.findNextHelperIndex(testPlayers, this.helperIndex);
+
+    // reset the next players score
+    for(var player of testPlayers){
+      if(player.index == this.helperIndex && player.winnerPlace == 0 && this.resetNextPlayer){
         player.score1 = "";
         player.score2 = "";
         player.score3 = "";
+        this.resetNextPlayer = false;
       }
     }
 
     this.injectService.setPlayers(testPlayers);
+  }
+
+  private findNextHelperIndex(players: Player[], index: number) : number{
+    for(var player of players){
+      if(player.index == index && player.winnerPlace > 0){
+        if((index + 1) > players.length){
+          index = 0;
+        }
+        return this.findNextHelperIndex(players, index + 1);
+      }
+    }
+    return index;
   }
 
   public doubleButtonClass(){

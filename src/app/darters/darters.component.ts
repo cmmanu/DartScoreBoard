@@ -93,6 +93,7 @@ export class DartersComponent implements OnInit {
     }
     this.injectService.setPlayers(this.players);
     this.injectService.setReseted(true);
+    this.injectService.setHelperIndex(1);
   }
 
   public isThereAWinner()
@@ -148,22 +149,45 @@ export class DartersComponent implements OnInit {
     return false;
   }
 
+  private searchLastPlayerToDeleteScore(players: Player[], index: number): number{
+    if((index - 1) < 1){
+      index = players.length + 1;
+    }
+    for(var player of players){
+      if(player.index == index - 1 && player.winnerPlace > 0){
+        return this.searchLastPlayerToDeleteScore(players, index - 1);
+      }
+    }
+    return index - 1;
+  }
+
   public deleteLastScore()
   {
     let minRound = 99999;
     let helperPlayer: Player = new Player;
+  
     for(let playerObj of this.players)
     {
-      if(playerObj.winnerPlace > 0)
+      if(playerObj.round <= minRound && playerObj.winnerPlace == 0)
       {
-        continue;
-      }
-      if(playerObj.round <= minRound && playerObj.score1 != "")
-      {
-        minRound = playerObj.round;
-        helperPlayer = playerObj;
+       if((minRound - playerObj.round) >= 1){
+          minRound = playerObj.round;
+          helperPlayer = playerObj;
+       }
       }
     }
+
+    let searchPlayerIndex = this.searchLastPlayerToDeleteScore(this.players, helperPlayer.index);
+
+    if(helperPlayer.score1 == ""){
+      for(let playerObj of this.players){
+        if(playerObj.index == searchPlayerIndex && playerObj.score3 != "" && playerObj.winnerPlace == 0){
+          helperPlayer = playerObj;
+          break;
+        }
+      }
+    }
+
     if(helperPlayer.index == 0)
     {
       return;
@@ -212,10 +236,7 @@ export class DartersComponent implements OnInit {
       helperPlayer.thrownPoints -= Number(helperPlayer.score1);
       helperPlayer.currentScoreNumber = 1;
       helperPlayer.score1 = "";
-     // if(helperPlayer.round != 0)
-      //{
-      //  helperPlayer.index = highestPlayerNumber;
-      //}
+
       
       //calculate average
       if(helperPlayer.average != 0 && helperPlayer.thrownPoints != 0 && helperPlayer.thrownPoints != 1)
