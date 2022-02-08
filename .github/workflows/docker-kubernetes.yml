@@ -17,5 +17,5 @@ jobs:
     - name: Build the Docker image
       run: 
         docker build --tag my-image-name:$(date +%s) .
-        #docker push my-image-name:$(date +%s)
-        #kubectl apply -f k8s.yaml
+        docker push my-image-name:$(date +%s)
+        kubectl apply -f k8s.yaml
