@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: |
-        docker build --tag my-image-name .
+        docker build --tag cmmanu/my-image-name .
         docker login -u "cmmanu" -p "gq4z0mjE1!" docker.io
         docker push cmmanu/my-image-name
         kubectl apply -f k8s.yaml
