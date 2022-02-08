@@ -15,7 +15,7 @@ spec:
       spec:
         containers:
         - name: dartscoreboard
-          image: ACR_URL/dartscoreboard:IMAGE_LABEL
+          image: /dartscoreboard:IMAGE_LABEL
           ports:
           -containerPort: 80
           resources: {}
