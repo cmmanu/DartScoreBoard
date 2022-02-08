@@ -16,6 +16,6 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: |
-        docker build --tag my-image-name .
-        docker push my-image-name
-        kubectl apply -f k8s.yaml
+        docker build --tag cmmanu/dartscoreboard .
+        docker login -u "cmmanu" -p ${{ secrets.DOCKER_PASSWORD }} docker.io
+        docker push cmmanu/dartscoreboard
