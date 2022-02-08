@@ -11,11 +11,11 @@ spec:
       metadata:
         labels:
           app: dartscoreboard
-          version: IMAGE_LABEL
+          version: github.sha
       spec:
         containers:
         - name: dartscoreboard
-          image: /dartscoreboard:IMAGE_LABEL
+          image: /dartscoreboard:github.sha
           ports:
           -containerPort: 80
           resources: {}
