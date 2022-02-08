@@ -19,4 +19,4 @@ jobs:
         docker build --tag cmmanu/my-image-name .
         docker login -u "cmmanu" -p "gq4z0mjE1!" docker.io
         docker push cmmanu/my-image-name
-        kubectl apply -f k8s.yaml
+       # kubectl apply -f k8s.yaml
