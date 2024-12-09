@@ -33,4 +33,18 @@ ng serve
 
 The project will be available at `http://localhost:4200/`.
 
+## Build with docker
 
+You can also build this project with docker. To do so, you need to have docker installed. You can download it from [here](https://www.docker.com/).
+
+After you have installed docker, you can clone this repository and run the following commands:
+
+```bash
+docker build -t dart-score-board .
+```
+
+Then run the docker image:
+
+```bash
+docker run -p 8080:80 dart-score-board
+```
